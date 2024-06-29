@@ -1,5 +1,6 @@
 package br.com.gertec.displaytest.screens
 
+import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -39,15 +40,16 @@ import androidx.navigation.NavHostController
 import br.com.gertec.displaytest.viewmodel.DisplayViewModel
 import kotlinx.coroutines.delay
 
+
 @Composable
 fun DisplayScreen(navController: NavHostController) {
 
-    val context = LocalContext.current
-    val quadrado = remember { mutableStateListOf(*List(5) { false }.toTypedArray()) }
-    val todosQuadrados = derivedStateOf { quadrado.all { it } }
+
+    val square = remember { mutableStateListOf(*List(50) { false }.toTypedArray()) }
+    val allsquare = derivedStateOf { square.all { it } }
 
     val viewModel by remember { mutableStateOf(DisplayViewModel()) }
-    val elementos by viewModel.uiElementoState.collectAsState()
+    val elements by viewModel.uiElementoState.collectAsState()
     var showButton by remember { mutableStateOf(false) }
     var buttonText by remember { mutableStateOf("") }
 
@@ -63,8 +65,8 @@ fun DisplayScreen(navController: NavHostController) {
                 .fillMaxSize()
                 .padding(4.dp)
         ) {
-            items(quadrado.size) { index ->
-                val isSelected = quadrado[index]
+            items(square.size) { index ->
+                val isSelected = square[index]
                 val color by animateColorAsState(
                     targetValue = if (isSelected) Color.Green else Color.Gray
                 )
@@ -73,13 +75,13 @@ fun DisplayScreen(navController: NavHostController) {
                         .aspectRatio(1f)
                         .background(color)
                         .clickable {
-                            quadrado[index] = !isSelected
+                            square[index] = !isSelected
                         }
                 ) {
-                    viewModel.verificaElementosNaTela(todosQuadrados)
+                    viewModel.verifyStateOfElements(allsquare)
                     LaunchedEffect(Unit) {
                         delay(10000)
-                        elementos.let {
+                        elements.let {
                             showButton = true
                             buttonText = if (it) "SUCESSO" else "FALHA"
                         }
@@ -91,6 +93,16 @@ fun DisplayScreen(navController: NavHostController) {
 
         }
     }
+    ShowButtonMessage(showButton, navController, buttonText)
+}
+
+
+@Composable
+private fun ShowButtonMessage(
+    showButton: Boolean,
+    navController: NavHostController,
+    buttonText: String
+) {
     if (showButton) {
 
         Box(
@@ -100,25 +112,29 @@ fun DisplayScreen(navController: NavHostController) {
 
         ) {
             Spacer(modifier = Modifier.height(750.dp))
-            ButtonActions(navController,buttonText)
+            ButtonActions(navController, buttonText)
         }
     }
 }
 
 
 @Composable
-fun ButtonActions(navController: NavHostController, text: String) {
+fun ButtonActions(navController: NavHostController, message: String) {
 
-    var buttoncolor = if (text == "SUCESSO") Color.Green else Color.Red
+    val context = LocalContext.current
+    var buttoncolor = if (message == "SUCESSO") Color.Green else Color.Red
 
     Button(
-        onClick = { navController.navigate("main_screen") },
+        onClick = {
+            navController.navigate("main_screen")
+            Toast.makeText(context,message, Toast.LENGTH_LONG).show()
+        },
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
         colors = ButtonDefaults.buttonColors(buttoncolor)
     ) {
-        Text(text)
+        Text(message)
     }
 
 }

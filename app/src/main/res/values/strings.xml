@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DisplayTest</string>
+    <string name="message_button_display">Teste Manual Display</string>
 </resources>
