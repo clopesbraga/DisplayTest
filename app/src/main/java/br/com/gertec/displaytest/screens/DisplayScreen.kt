@@ -123,7 +123,7 @@ private fun ShowButtonMessage(
 fun ButtonActions(navController: NavHostController, message: String) {
 
     val context = LocalContext.current
-    var buttoncolor = if (message == "SUCESSO") Color.Green else Color.Red
+    val buttoncolor = if (message == "SUCESSO") Color.Green else Color.Red
 
     Button(
         onClick = {
