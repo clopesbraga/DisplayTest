@@ -45,7 +45,7 @@ import kotlinx.coroutines.delay
 fun DisplayScreen(navController: NavHostController) {
 
 
-    val square = remember { mutableStateListOf(*List(50) { false }.toTypedArray()) }
+    val square = remember { mutableStateListOf(*List(55) { false }.toTypedArray()) }
     val allsquare = derivedStateOf { square.all { it } }
 
     val viewModel by remember { mutableStateOf(DisplayViewModel()) }
@@ -54,7 +54,9 @@ fun DisplayScreen(navController: NavHostController) {
     var buttonText by remember { mutableStateOf("") }
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp)
     ) {
 
         LazyVerticalGrid(
@@ -116,7 +118,6 @@ private fun ShowButtonMessage(
         }
     }
 }
-
 
 @Composable
 fun ButtonActions(navController: NavHostController, message: String) {
