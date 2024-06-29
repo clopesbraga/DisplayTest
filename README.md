@@ -1,5 +1,3 @@
-## Badgeds
-![GitHub tag checks state](https://img.shields.io/github/checks-status/clopesbraga/DisplayTest/master)  | ![GitHub language count](https://img.shields.io/github/languages/count/clopesbraga/DisplayTest) |  ![GitHub repo size](https://img.shields.io/github/repo-size/clopesbraga/DisplayTest) |  ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/clopesbraga/DisplayTest/master)
 
 
 ## Projeto Test Display
